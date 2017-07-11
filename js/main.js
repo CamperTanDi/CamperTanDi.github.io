@@ -103,8 +103,17 @@ function address(x,y){
 }
 
 function randomMap() {
-    
+    var mappoint = {};
+    for(var x = -500; x <= 500; x++){
+        for (var y = -500; y <= 500; y++ ){
+            var objname = "["+x+","+y+"]";
+            mappoint[objname] = [x,y];
+        }
+    }
+    return mappoint;
 }
+
+var mapposition = randomMap(); 
 
 /*
 function address(point) {
