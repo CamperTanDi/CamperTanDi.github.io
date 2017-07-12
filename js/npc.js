@@ -1,4 +1,4 @@
-var npc1 = {
+/*var npc1 = {
     race : "elf",
     npcName : "darvlin",
     level : 1,
@@ -7,7 +7,7 @@ var npc1 = {
     hp : 100,
     mp : 100,
     active : 0,
-}
+}*/
 
 var npc = {}
 
