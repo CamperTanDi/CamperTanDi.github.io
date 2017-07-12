@@ -52,16 +52,23 @@ var uuuu = [4, 0],
     bb = [-2, 0],
     bbr = [-2, 1],
     bbrr = [-2, 2],
-    bbbl = [-3, 1],
+    bbbl = [-3, -1],
     bbb = [-3, 0],
     bbbr = [-3, 1],
     bbbb = [-4, 0];
 var addressarray = [uuuu, uuul, uuu, uuur, uull, uul, uu, uur, uurr, ulll, ull, ul, u, ur, urr, urrr, llll, lll, ll, l, r, rr, rrr, rrrr, blll, bll, bl, b, br, brr, brrr, bbll, bbl, bb, bbr, bbrr, bbbl, bbb, bbbr, bbbb];
 
+var map = {
+    map0_0 : {
+        position : [0,0],
+        ground : "grass"
+    }
+}
+
 function ditu(point) {
     var point = point;
     $('.control').html("<div>(" + point + ")</div>");
-    $('.pp').html("pp").css("background", background());
+    background();
 }
 
 document.onkeydown = function (event) {
@@ -89,10 +96,37 @@ document.onkeydown = function (event) {
 };
 
 function background(point) {
-    //   var ground = ground;
-    //  if (ground == 'grass') {
-    return "#43CD80";
-    //  }
+    var td = document.getElementsByTagName("td");
+    for(var i in td){
+        if(td[i].className !== ""&&td[i].className !== "control" &&td[i].className !== "status" &&td[i].className !== "player"){
+            var po = eval(td[i].className);
+            //console.log(po);
+            var _my = "map"+po[0]+"_"+po[1]+"";
+            //console.log(_my)
+            if(map[_my] == undefined){
+                map[_my] = {
+                    position : [po[0],po[1]],
+                    ground : randomground(po[0],po[1])
+                }
+                //console.log(map[_my])
+            }
+            for(var j in map){
+                if(map[j].position[0] == po[0]&&map[j].position[1] == po[1]){
+                    //console.log(map[j].position);
+                    if(map[j].ground == "grass"){
+                        //console.log(td[i].style.background)
+                        td[i].style.background = "#43CD80";
+                    }else 
+                    if(map[j].ground == "tree"){
+                        td[i].style.background = "#006400";
+                    }else 
+                    if(map[j].ground == "rock"){
+                        td[i].style.background = "#B8B8B8"
+                    }
+                }
+            }
+        }
+    }
 }
 
 function address(x,y){
@@ -101,40 +135,19 @@ function address(x,y){
         addressarray[i][1] = addressarray[i][1] + y;
     }
 }
-
-function randomMap() {
-    var mappoint = {};
-    for(var x = -500; x <= 500; x++){
-        for (var y = -500; y <= 500; y++ ){
-            var objname = "["+x+","+y+"]";
-            mappoint[objname] = [x,y];
-        }
+function randomground(param0,param1){
+    var ground;
+    var rnum = Math.random()*10;
+    if(rnum >7&&rnum<8 ){
+        ground = "rock";
     }
-    return mappoint;
-}
-
-var mapposition = randomMap(); 
-
-/*
-function address(point) {
-    var pp = point;
-    for (var i = 0; i < addressarray.length; i++) {
-        var row = $('.' + addressarray[i] + '').parent().index() - 4; // 行位置
-        var col = $('.' + addressarray[i] + '').index() - 4; // 列位置
-        addressarray[i][0] = pp[0] + row;
-        addressarray[i][1] = pp[1] + col;
+    else if(rnum > 5&&rnum < 6 ){
+        ground = "tree";
     }
+    else{
+        ground = "grass";
+    }
+    return ground;
 }
-function addresscalculate(param) {
-    var row = $('.' + param + '').parent().index() - 4; // 行位置
-    var col = $('.' + param + '').index() - 4; // 列位置
-    param[0] = point[0] + row;
-    param[1] = point[1] + col;
-}
-function arrayaddresscal(arg) {
-    var arg = arg;
-    var rtn = [];
-    rtn = arg.split(",");
-    return rtn;
-}
-*/
+
+ditu(loca)
