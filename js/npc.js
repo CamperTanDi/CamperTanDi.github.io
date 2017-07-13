@@ -9,6 +9,21 @@
     active : 0,
 }*/
 
+var npcCollection = {
+    elf : {
+        race : "elf",
+        firstName : ["Darvlin"],
+        secondName : ["Windtalker"],
+        weapon : ["sword"],
+    },
+    darkElf : {
+        race : "darkElf",
+        firstName : ["Youchor"],
+        secondName : ["fog"],
+        weapon : ["sword"],
+    },
+}
+
 var npc = {}
 
 var npcNew = function(race,npcName,level,weapon){
@@ -57,8 +72,12 @@ function npcBuild(){
             _myvari = npc[_myvarible];
             if(_myvari == undefined){
                 npc[_myvarible] = new npcNew();
-                console.log("done")
+                return 1;
             }
         }
     }
+}
+
+function reinforcement(){
+
 }
