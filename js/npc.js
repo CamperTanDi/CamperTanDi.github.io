@@ -9,53 +9,83 @@
     active : 0,
 }*/
 
-var npcCollection = {
+var npcGroup = {
     elf : {
         race : "elf",
         firstName : ["Darvlin"],
         secondName : ["Windtalker"],
         weapon : ["sword"],
+        hp : 100,
+        mp : 200,
+        active : 0,
     },
     darkElf : {
         race : "darkElf",
         firstName : ["Youchor"],
         secondName : ["fog"],
         weapon : ["sword"],
+        hp : 500,
+        mp : 80,
+        active : 1,
     },
 }
 
 var npc = {}
 
-var npcNew = function(race,npcName,level,weapon){
-    this.race = race;
-    this.npcName = npcName;
-    this.level = level;
-    this.weapon = weapon;
+var npcNew = function(){
+    this.race = npcRace();
     this.position = npcPosition();
-    this.hp = npcHP(level,race);
-    this.mp = npcMP(level,race);
-    this.active = npcActive(race);
+    this.npcName = npcName(this.race);
+    this.level = npcLevel(this.position);
+    this.weapon = npcWeapon(this.race);
+    this.hp = npcHP(this.level,this.race);
+    this.mp = npcMP(this.level,this.race);
+    this.active = npcActive(this.race);
 }
 
-function npcPosition(){
-    var rnum1 = Math.floor(Math.random()*10) + 10;
-    var rnum2 = Math.floor(Math.random()*10) + 10;
-    return [loca[0]+rnum1,loca[1]+rnum2];
+function npcRace(){
+    return "elf";
+}
+
+function npcLevel(point){
+    var point = point;
+    var _mycalculation = point[0]*point[0] + point[1]*point[1];
+    _mycalculation = Math.floor(Math.sqrt(_mycalculation)/10+1);
+    return _mycalculation;
+}
+
+function npcName(race){
+    var rnum1 = Math.floor(Math.random()*100);
+    var rnum2 = Math.floor(Math.random()*100);
+    var race = race;
+    var firstName, secondName, rtnName;
+    if(rnum1 < 200){
+        firstName = npcGroup[race].firstName[0];
+    }
+    if(rnum2 < 200){
+        secondName = npcGroup[race].secondName[0];
+    }
+    rtnName = ""+firstName+"·"+secondName+"";
+    return rtnName;
+}
+
+function npcWeapon(race){
+    var race = race;
+    var rnum1 = 0//Math.floor(Math.random()*10);
+    var rtn;
+    rtn = npcGroup[race].weapon[rnum1];
+    return rtn;
 }
 
 function npcHP(level,race){
     var level = level;
     var race = race;
-    if(race == "elf"){
-        return 100+level*10;
-    }
+    return npcGroup[race].hp + level*10;
 }
 function npcMP(level,race){
     var level = level;
     var race = race;
-    if(race == "elf"){
-        return 100+level*10;
-    }
+    return npcGroup[race].mp + level*10;
 }
 function npcActive(race){
     var race = race;
@@ -64,9 +94,9 @@ function npcActive(race){
     }
 }
 
-function npcBuild(){
+function npcBuild(point){
     var rnum = Math.random()*10;
-    if(rnum > 7){console.log("r")
+    if(rnum > 7){
         for(var i = 0; i < 41; i++){
             var _myvarible = "npc"+i+"";
             _myvari = npc[_myvarible];
@@ -78,6 +108,22 @@ function npcBuild(){
     }
 }
 
-function reinforcement(){
+function reinforcemence(){
 
 }
+
+function npcPosition(){
+    var rnum1 = Math.floor(Math.random()*10) - 5;
+    var rnum2 = Math.floor(Math.random()*10) - 5;
+    var y;
+    if(rnum1 >= -4){
+        y = 4 - Math.floor(Math.sqrt(rnum1*rnum1));
+        if(rnum2 <= 0){
+            y = -y;
+        }
+    }else{
+        return [loca[0]+0,loca[1]+4];
+    }
+    return [loca[0]+rnum1,loca[1]+y];
+}
+
