@@ -15,8 +15,8 @@ function unit(race, level, name, mod, position) {
     }
 }
 
-var loca = [0, 0];
-var uuuu = [4, 0],
+var loca = [0, 0],
+    uuuu = [4, 0],
     uuul = [3, -1],
     uuu = [3, 0],
     uuur = [3, 1],
@@ -56,19 +56,20 @@ var uuuu = [4, 0],
     bbb = [-3, 0],
     bbbr = [-3, 1],
     bbbb = [-4, 0];
-var addressarray = [uuuu, uuul, uuu, uuur, uull, uul, uu, uur, uurr, ulll, ull, ul, u, ur, urr, urrr, llll, lll, ll, l, r, rr, rrr, rrrr, blll, bll, bl, b, br, brr, brrr, bbll, bbl, bb, bbr, bbrr, bbbl, bbb, bbbr, bbbb];
+var addressarray = [loca,uuuu, uuul, uuu, uuur, uull, uul, uu, uur, uurr, ulll, ull, ul, u, ur, urr, urrr, llll, lll, ll, l, r, rr, rrr, rrrr, blll, bll, bl, b, br, brr, brrr, bbll, bbl, bb, bbr, bbrr, bbbl, bbb, bbbr, bbbb];
 
 var map = {
-    map0_0 : {
+    /*map0_0 : {
         position : [0,0],
         ground : "grass"
-    }
+    }*/
 }
 
 function ditu(point) {
     var point = point;
     $('.control').html("<div>(" + point + ")</div>");
     background();
+    innerContent();
 }
 
 document.onkeydown = function (event) {
@@ -76,29 +77,30 @@ document.onkeydown = function (event) {
     if (e && e.keyCode == 38) { // 按 上 
         loca[0] = loca[0] + 1;
         address(1,0);
-        ditu(loca);
+        runtime();
     }
     if (e && e.keyCode == 40) { // 按 下 
         loca[0] = loca[0] - 1;
         address(-1,0);
-        ditu(loca);
+        runtime();
     }
     if (e && e.keyCode == 37) { // 按 左
         loca[1] = loca[1] - 1;
         address(0,-1);
-        ditu(loca);
+        runtime();
     }
     if (e && e.keyCode == 39) { // 按 右
         loca[1] = loca[1] + 1;
         address(0,1);
-        ditu(loca);
+        runtime();
     }
 };
 
 function background(point) {
+    console.log("background()")
     var td = document.getElementsByTagName("td");
     for(var i in td){
-        if(td[i].className !== ""&&td[i].className !== "control" &&td[i].className !== "status" &&td[i].className !== "player"){
+        if(td[i].className !== ""&&td[i].className !== "control" &&td[i].className !== "status" &&td[i].className !== "player"/*&&td[i].className !== "loca"*/){
             var po = eval(td[i].className);
             //console.log(po);
             var _my = "map"+po[0]+"_"+po[1]+"";
@@ -122,6 +124,8 @@ function background(point) {
                     }else 
                     if(map[j].ground == "rock"){
                         td[i].style.background = "#B8B8B8"
+                    }else{
+                        td[i].style.background = "#000000"
                     }
                 }
             }
@@ -130,7 +134,7 @@ function background(point) {
 }
 
 function address(x,y){
-    for(var i = 0; i < addressarray.length; i++){
+    for(var i = 1; i < addressarray.length; i++){
         addressarray[i][0] = addressarray[i][0] + x;
         addressarray[i][1] = addressarray[i][1] + y;
     }
@@ -151,3 +155,51 @@ function randomground(param0,param1){
 }
 
 ditu(loca)
+
+function dituRecovery(){
+    for(var i in map){
+        if(eyesContact(loca,map[i].position) > 20){
+            delete map[i];
+        }
+    }
+}
+
+var time = 1;
+
+function runtime(){
+    if(time < 1000){
+        npcBuild();
+        dituRecovery();
+        npcRecovery();
+        time++;
+        ditu(loca)
+        
+        //return 1;
+    }else{
+        alert("something happened")
+        dituRecovery();
+        npcRecovery();
+        time = 0;
+        ditu(loca);
+        
+        //return 0;
+    }
+}
+
+function innerContent(){
+    console.log("innerContent()")
+    var td = document.getElementsByTagName("td");
+    for(var i in td){
+        if(td[i].className !== ""&&td[i].className !== "control" &&td[i].className !== "status" &&td[i].className !== "player"/*&&td[i].className !== "loca"*/){
+            var po = eval(td[i].className);
+            //console.log(po);
+            for(var j in npc){
+                if(npc[j].position[0] == po[0]&&npc[j].position[1] == po[1]){
+                    $(td[i]).text(""+npc[j].race+"");
+                }else{
+                    $(td[i]).text("");
+                }
+            }
+        }
+    }
+}

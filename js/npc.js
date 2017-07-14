@@ -102,6 +102,7 @@ function npcBuild(point){
             _myvari = npc[_myvarible];
             if(_myvari == undefined){
                 npc[_myvarible] = new npcNew();
+                console.log("build an elf")
                 return 1;
             }
         }
@@ -127,3 +128,16 @@ function npcPosition(){
     return [loca[0]+rnum1,loca[1]+y];
 }
 
+function eyesContact(pointM,pointS){
+    var x = pointM[0] - pointS[0];
+    var y = pointM[1] - pointS[1];
+    return Math.floor(Math.sqrt(x*x+y*y))
+}
+
+function npcRecovery(){
+    for(var i in npc){
+        if(eyesContact(loca,npc[i].position) > 20){
+            delete npc[i];
+        }
+    }
+}
