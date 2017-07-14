@@ -94,9 +94,9 @@ function npcActive(race){
     }
 }
 
-function npcBuild(point){
+function npcBuild(){
     var rnum = Math.random()*10;
-    if(rnum > 7){
+    if(rnum > 9){
         for(var i = 0; i < 41; i++){
             var _myvarible = "npc"+i+"";
             _myvari = npc[_myvarible];
@@ -119,7 +119,7 @@ function npcPosition(){
     var y;
     if(rnum1 >= -4){
         y = 4 - Math.floor(Math.sqrt(rnum1*rnum1));
-        if(rnum2 <= 0){
+        if(rnum2 < 0){
             y = -y;
         }
     }else{
@@ -141,3 +141,4 @@ function npcRecovery(){
         }
     }
 }
+
