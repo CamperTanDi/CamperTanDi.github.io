@@ -231,18 +231,22 @@ var time = 1;
 
 function runtime() {
   if (time < 1000) {
+    npcMoving();
     dituRecovery();
     npcRecovery();
     time++;
     ditu(loca);
+    contact();
     console.log("1");
     //return 1;
   } else {
     alert("something happened");
+    npcMoving();
     dituRecovery();
     npcRecovery();
     time = 0;
     ditu(loca);
+    contact();
     //return 0;
   }
 }

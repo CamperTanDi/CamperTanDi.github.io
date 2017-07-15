@@ -1,13 +1,13 @@
 var player = {
-    race : "human",
-    playerName : "td",
-    level : 1,
-    weapon : "fist",
-    position : [0,0],
-    hp : 100,
-    mp : 0,
-    active : 0,
-}
+    race: "human",
+    playerName: "td",
+    level: 1,
+    weapon: "fist",
+    position: [0, 0],
+    hp: 100,
+    mp: 0,
+    active: 0
+};
 
 /*var npc1 = {
     race : "elf",
@@ -29,4 +29,3 @@ var player = {
         }
     }
 }*/
-

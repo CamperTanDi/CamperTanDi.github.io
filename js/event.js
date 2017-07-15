@@ -2,15 +2,50 @@ $('.excavations').on("click", function () { console.log("excavations") })
 
 function battle(player, npc) {
     var rnum1 = Math.floor(Math.random() * 10);
+    var rnum2 = Math.floor(Math.random() * 10);
     var hit;
     if (npc.mp >= player.mp) {
-        npc.mp = npc.mp - rnum1;
-        hit = npc.level * npc.hp * 0.01 + rnum1;
-        attackDialog(player,npc,hit);
-        player.mp = player.mp + rnum1;
-        player.hp = player.hp - hit;
-        countstrikeDialog(npc,player,hit)
-        npc.hp = npc.hp - hit * player.level *0.01 * player.hp;
+        if (npc.mp > npc.hp) {
+        } else if (rnum2 > 5) {
+        } else {
+        }
+    } else {
+        if (player.mp > player.hp) {
+        } else if (rnum2 > 5) {
+        } else {
+        }
+    }
+}
+
+function hitCalculate(unit1, unit2, rnum) {
+    var hit;
+    hit = (unit1.level * unit1.hp * 0.01 + rnum) * (unit1.ATK - unit2.DEF) ;
+    attackDialog(unit1, unit2, hit);
+    unit2.hp = unit2.hp - hit;
+    countstrikeDialog(unit1, unit2, hit);
+    unit1.hp = unit1.hp - hit * unit2.level * 0.01 * unit2.hp;
+}
+
+function magicCalculate(unit1, unit2, rnum) {
+    var hit;
+    var rnum1 = Math.floor(Math.random() * 10);
+    var rnum2 = Math.floor(Math.random() * 10);
+    hit - unit1.level * unit1.mp * 0.01 + rnum;
+    if (unit1.magic == undefined || unit1.magic.length == 0) {
+        for (var i = 0; i < unit1.magic.length; i++) {
+            if (rnum1 > 5) {
+
+            }
+        }
+    }
+}
+
+data = {
+    magic: {
+        criticalHit: [0, 1],
+        forestHope: [-1, -1],
+        windSpeak: [-1, 1],
+        broveAid: [-1, 0],
     }
 }
 
@@ -19,6 +54,7 @@ function battle(player, npc) {
     playerName: "td",
     level: 1,
     weapon: "fist",
+    magic : ["criticalHit"]
     position: [0, 0],
     hp: 100,
     mp: 0,
@@ -30,6 +66,7 @@ function battle(player, npc) {
     npcName : "darvlin",
     level : 1,
     weapon : "sword",
+    magic : ["windSpeak","forestHope"]
     position : [5,5],
     hp : 100,
     mp : 100,

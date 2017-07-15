@@ -14,18 +14,24 @@ var npcGroup = {
     race: "elf",
     firstName: ["Darvlin"],
     secondName: ["Windtalker"],
+    magic: ["windSpeak", "forestHope"],
     weapon: ["sword"],
     hp: 100,
     mp: 200,
+    DEF: 0.1,
+    ATK: 0.4,
     active: 0
   },
   darkElf: {
     race: "darkElf",
     firstName: ["Youchor"],
     secondName: ["fog"],
+    magic: ["broveAid"],
     weapon: ["sword"],
     hp: 500,
     mp: 80,
+    DEF: 0.4,
+    ATK: 0.6,
     active: 1
   }
 };
@@ -36,15 +42,18 @@ var npcNew = function () {
   this.race = npcRace();
   this.position = npcPosition();
   this.npcName = npcName(this.race);
+  this.magic = npcMagic(this.race);
   this.level = npcLevel(this.position);
   this.weapon = npcWeapon(this.race);
   this.hp = npcHP(this.level, this.race);
   this.mp = npcMP(this.level, this.race);
+  this.DEF = npcDEF(this.level, this.race);
+  this.ATK = npcATK(this.level, this.race);
   this.active = npcActive(this.race);
 };
 
 function npcRace() {
-  return "elf";
+  return "darkElf";
 }
 
 function npcLevel(point) {
@@ -69,6 +78,18 @@ function npcName(race) {
   return rtnName;
 }
 
+function npcMagic(race) {
+  var race = race;
+  var rtnMagic = [];
+  for (var i = 0; i < npcGroup[race].magic.length; i++) {
+    var rnum1 = Math.floor(Math.random() * 10);
+    if (rnum1 > 5) {
+      rtnMagic.push(npcGroup[race].magic[i]);
+    }
+  }
+  return rtnMagic;
+}
+
 function npcWeapon(race) {
   var race = race;
   var rnum1 = 0; //Math.floor(Math.random()*10);
@@ -82,16 +103,28 @@ function npcHP(level, race) {
   var race = race;
   return npcGroup[race].hp + level * 10;
 }
+
 function npcMP(level, race) {
   var level = level;
   var race = race;
   return npcGroup[race].mp + level * 10;
 }
+
+function npcDEF(level, race) {
+  var level = level;
+  var race = race;
+  return npcGroup[race].DEF + npcGroup[race].DEF * level * 2.5;
+}
+
+function npcATK(level, race){
+  var level = level;
+  var race = race;
+  return npcGroup[race].ATK + npcGroup[race].ATK * level * 2.5;
+}
+
 function npcActive(race) {
   var race = race;
-  if (race == "elf") {
-    return 0;
-  }
+    return npcGroup[race].active;
 }
 
 function npcBuild() {
@@ -144,6 +177,7 @@ function npcMoving() {
   for (var i in npc) {
     if (npc[i].active > 0) {
       if (eyesContact(npc[i].position, loca) < Math.sqrt(npc[i].level - player.level + 3)) {
+        console.log("moving");
         var x = npc[i].position[0] - loca[0];
         var y = npc[i].position[1] - loca[1];
         if (Math.abs(x) > Math.abs(y)) {
