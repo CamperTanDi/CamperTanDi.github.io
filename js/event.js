@@ -4,10 +4,13 @@ function battle(player, npc) {
     var rnum1 = Math.floor(Math.random() * 10);
     var rnum2 = Math.floor(Math.random() * 10);
     var hit;
-    if (npc.mp >= player.mp) {
+    if (npc.hp >= player.hp) {
         if (npc.mp > npc.hp) {
+            magicCalculate(npc, player, rnum1);
         } else if (rnum2 > 5) {
+            hitCalculate(npc, player, rnum1);
         } else {
+            missDialog(npc, player);
         }
     } else {
         if (player.mp > player.hp) {
@@ -19,7 +22,7 @@ function battle(player, npc) {
 
 function hitCalculate(unit1, unit2, rnum) {
     var hit;
-    hit = (unit1.level * unit1.hp * 0.01 + rnum) * (unit1.ATK - unit2.DEF) ;
+    hit = (unit1.level * unit1.hp * 0.01 + rnum) * (unit1.ATK - unit2.DEF);
     attackDialog(unit1, unit2, hit);
     unit2.hp = unit2.hp - hit;
     countstrikeDialog(unit1, unit2, hit);
@@ -30,11 +33,23 @@ function magicCalculate(unit1, unit2, rnum) {
     var hit;
     var rnum1 = Math.floor(Math.random() * 10);
     var rnum2 = Math.floor(Math.random() * 10);
-    hit - unit1.level * unit1.mp * 0.01 + rnum;
-    if (unit1.magic == undefined || unit1.magic.length == 0) {
+    hit = unit1.level * unit1.mp * 0.01 + rnum;
+    if (unit1.magic !== undefined || unit1.magic.length !== 0) {
         for (var i = 0; i < unit1.magic.length; i++) {
             if (rnum1 > 5) {
-
+                unit1.mp = unit1.mp - 10;
+                magicAtkDialog(unit1, unit2, hit);
+                unit1.hp = unit1.hp - hit * data.magic[unit1.magic[i]][0];
+                unit2.hp = unit2.hp - hit * data.magic[unit1.magic[i]][1];
+                break;
+            } else if (rnum2 > 9) {
+                unit1.mp = 0;
+                magicAtkSelfDialog(unit1, unit2, hit);
+                unit1.hp = unit1.hp / 2;
+                break;
+            } else {
+                unit1.mp = unit1.mp + 10;
+                magicDefDialog(unit1, unit2, hit);
             }
         }
     }

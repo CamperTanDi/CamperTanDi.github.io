@@ -231,7 +231,7 @@ var time = 1;
 
 function runtime() {
   if (time < 1000) {
-    npcMoving();
+    //npcMoving();
     dituRecovery();
     npcRecovery();
     time++;
@@ -241,7 +241,7 @@ function runtime() {
     //return 1;
   } else {
     alert("something happened");
-    npcMoving();
+    //npcMoving();
     dituRecovery();
     npcRecovery();
     time = 0;
