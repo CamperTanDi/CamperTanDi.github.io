@@ -55,6 +55,19 @@ function magicCalculate(unit1, unit2, rnum) {
     }
 }
 
+function attackDialog(unit1, unit2, hit) {
+    
+}
+
+var dialog = {
+    magic: {
+        criticalHit: "criticalHit",
+    },
+    atk: {
+
+    }
+}
+
 data = {
     magic: {
         criticalHit: [0, 1],
@@ -63,6 +76,8 @@ data = {
         broveAid: [-1, 0],
     }
 }
+
+
 
 /*var player = {
     race: "human",
